@@ -1,0 +1,7 @@
+C:\Users\Mahalakshmi.M\OneDrive - GEP\Documents\C#practice\MyFirstProject\MyFirstProject\bin\Debug\MyFirstProject.exe.config
+C:\Users\Mahalakshmi.M\OneDrive - GEP\Documents\C#practice\MyFirstProject\MyFirstProject\bin\Debug\MyFirstProject.exe
+C:\Users\Mahalakshmi.M\OneDrive - GEP\Documents\C#practice\MyFirstProject\MyFirstProject\bin\Debug\MyFirstProject.pdb
+C:\Users\Mahalakshmi.M\OneDrive - GEP\Documents\C#practice\MyFirstProject\MyFirstProject\obj\Debug\MyFirstProject.csproj.AssemblyReference.cache
+C:\Users\Mahalakshmi.M\OneDrive - GEP\Documents\C#practice\MyFirstProject\MyFirstProject\obj\Debug\MyFirstProject.csproj.CoreCompileInputs.cache
+C:\Users\Mahalakshmi.M\OneDrive - GEP\Documents\C#practice\MyFirstProject\MyFirstProject\obj\Debug\MyFirstProject.exe
+C:\Users\Mahalakshmi.M\OneDrive - GEP\Documents\C#practice\MyFirstProject\MyFirstProject\obj\Debug\MyFirstProject.pdb
