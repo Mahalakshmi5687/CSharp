@@ -2068,3 +2068,810 @@ Static Constructor
 Default Constructor
 Param Constructor
 Copy COnstructor*/
+//Call by value and Call by reference
+/*call by value with value type
+ call by value with reference type
+call by reference with value type
+call by reference with reference type*/
+/*OriginalValue -> modified?Call by reference:callByReferenceWithReference by value*/
+/*namespace callByValueWithValue
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int a = 10;
+            int b = a;
+            b = 20;
+            Console.WriteLine(a+"\t"+  b);
+        }
+    }
+}*/
+/*namespace callByValueWithReference
+{
+    public class Employee
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee emp1 = new Employee();
+            emp1.ID = 101;
+            emp1.Name = "Test";
+            Employee emp2 = emp1;
+            emp1.Name = "Maha";
+        }
+    }
+}*/
+/*namespace callByReferenceWithValue
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int a = 10;
+            Display(ref a);
+        }
+        public static void Display(ref int b)
+        {
+            b = 30;
+        }
+    }
+}*/
+/*namespace callByReferenceWithReference
+{
+    public class Employee
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee emp1 = new Employee();
+            emp1.ID = 101;
+            emp1.Name = "Test";
+            Display(ref emp1);
+        }
+        public static void Display(ref  Employee emp2)
+        {
+            emp2 = null;
+        }
+    }
+}*/
+/*Readyonly can be initialize in constructor only and can be initialized multiple time for each object creation in constructor only*/
+/*namespace ConstAndReadOnly
+{
+    class Employee
+    {
+        public const string name = "Maha";
+        public readonly int id;
+        public static int fee;
+        public Employee()
+        {
+            id = 2012;
+        }
+        public Employee(int a)
+        {
+            id = a;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee.fee = 3000;
+            Employee emp= new Employee(300);
+            Employee emp2 = new Employee(400);
+            Employee emp3 = new Employee();
+        }
+    }
+}*/
+//Convert.Tostring() vs Tostring()
+/*namespace stringMethods
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string Name = null;
+            Console.WriteLine("hi"+Convert.ToString(Name));//Convert.Tostring can handles null values
+
+            Console.WriteLine(Name.ToString());//ToString cannot handle null values
+        }
+    }
+}*/
+/*Advantages and disadvantages of non-generic collections:
+ Array: Type-safe but not fixed Lenght
+Collection: Auto resizing but not type-safe
+Generic Collection: Type-safe and Auto-Resizing but not Thread safety*/
+
+//Generics:
+/*Are not specific to particular data type. And that particular data type will be decided by compiler at compilation time. */
+/*namespace Generics
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isEqual = Calc.AreEqual(10.2, 20.9);
+
+        }
+    }
+    public class Calc
+    {
+        public static bool AreEqual(int a, int b)
+        {
+            return a == b;
+        }
+        public static bool AreEqual(double a, double b)
+        {
+            return a == b;
+        }
+        public static bool AreEqual(object a, object b)
+        {
+            return a == b;
+        }
+    }
+}*/
+/*namespace Generics
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isEqual = Calc.AreEqual<double>(10.2, 20.9);
+            bool isEqual1 = Calc.AreEqual<string>("Hi", "Hello");
+        }
+    }
+    public class Calc
+    {
+        public static bool AreEqual<T>(T a, T b)
+        {
+            return a.Equals(b);
+        }
+    }
+}*/
+//Generic Constraints
+/*where T: struct: The type argument must be non-nullable value type such as primitive data types 
+ int, double, char, bool, float, etc. The struct constraints can't be combined with the unmanaged constraints.
+
+ where T: class: The type argument must be a reference type. This constraints can be applied to any class
+(non-nullable), interface, delegates, or array type in c#
+
+ where T: new() => The type argument must be a reference type that has a public parameterless (default) constructor.
+
+ where T: <base class name> => The type of argument must be or derive from the specified base class.
+
+ where T: <interface name> => The type argument must be or implement the specified interface. Also, multiple interface
+constraints can be specified.
+
+ where T: U => The type argument supplied for must be or derive from the argument supplied for U.
+In a nullable context, if U is a non-nullable reference type, T must be a non-nullable reference type. If U is a 
+nullable reference type, T may be either nullable or non-nullable.*/
+/*namespace genericConstraintsFORclass { 
+    public class ConstraintsClass<T> where T : class
+    {
+        public T value { get; set; }
+        public void Method(T a, T b)
+        {
+            Console.WriteLine("Value "+value);
+            Console.WriteLine("a "+a);
+            Console.WriteLine("b "+b);
+        }
+    }
+    public class Employee
+    {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConstraintsClass<Employee> emp = new ConstraintsClass<Employee>();
+            Employee emp1 = new Employee() { Name = "Maha", Gender = "Female" };
+            Employee emp2 = new Employee() { Name = "Swathi", Gender = "Female" };
+            Employee emp3 = new Employee() { Name = "Nitesh", Gender = "Male" };
+            emp.value = emp1;
+            emp.Method(emp2, emp3);
+            ConstraintsClass<string> constraintsClass = new ConstraintsClass<string>();
+            constraintsClass.value = "Hello";
+            constraintsClass.Method("Hi", "Hello");
+        }
+    }
+}*/
+/*namespace genericConstraintsFORstruct
+{
+    public class ConstraintsClass<T> where T : struct
+    {
+        public T value { get; set; }
+        public void Method(T a, T b)
+        {
+            Console.WriteLine("Value " + value);
+            Console.WriteLine("a " + a);
+            Console.WriteLine("b " + b);
+        }
+    }
+    public class Employee
+    {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            *//*ConstraintsClass<Employee> emp = new ConstraintsClass<Employee>();
+            Employee emp1 = new Employee() { Name = "Maha", Gender = "Female" };
+            Employee emp2 = new Employee() { Name = "Swathi", Gender = "Female" };
+            Employee emp3 = new Employee() { Name = "Nitesh", Gender = "Male" };
+            emp.value = emp1;
+            emp.Method(emp2, emp3);
+            ConstraintsClass<string> constraintsClass = new ConstraintsClass<string>();
+            constraintsClass.value = "Hello";
+            constraintsClass.Method("Hi", "Hello");*//*
+            ConstraintsClass<int> constraintsClass = new ConstraintsClass<int>();
+            constraintsClass.value = 10;
+            constraintsClass.Method(20, 30);
+        }
+    }
+}*/
+/*namespace genericConstraintsFORNew
+{
+    public class ConstraintsClass<T> where T : new()
+    {
+        public T value { get; set; }
+        public void Method(T a, T b)
+        {
+            Console.WriteLine("Value " + value);
+            Console.WriteLine("a " + a);
+            Console.WriteLine("b " + b);
+        }
+    }
+    public class Employee
+    {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+    }
+    public class Customer
+    {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+        public Customer(string CustName, string CustGender)
+        {
+            Name = CustName;
+            Gender = CustGender;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            *//*ConstraintsClass<Employee> emp = new ConstraintsClass<Employee>();
+            Employee emp1 = new Employee() { Name = "Maha", Gender = "Female" };
+            Employee emp2 = new Employee() { Name = "Swathi", Gender = "Female" };
+            Employee emp3 = new Employee() { Name = "Nitesh", Gender = "Male" };
+            emp.value = emp1;
+            emp.Method(emp2, emp3);
+            ConstraintsClass<string> constraintsClass = new ConstraintsClass<string>();
+            constraintsClass.value = "Hello";
+            constraintsClass.Method("Hi", "Hello");*//*
+            ConstraintsClass<int> constraintsClass = new ConstraintsClass<int>();
+            constraintsClass.value = 10;
+            constraintsClass.Method(20, 30);
+            //ConstraintsClass<Customer> constraintsClass1 = new ConstraintsClass<Customer>();//cannot create object for Customer class because it has parameterized constructor
+        }
+    }
+}*/
+/*namespace genericConstraintsFORbaseClass
+{
+    public class ConstraintsClass<T> where T : Parent
+    {
+        public T value { get; set; }
+        public void Method(T a, T b)
+        {
+            Console.WriteLine("Value " + value);
+            Console.WriteLine("a " + a);
+            Console.WriteLine("b " + b);
+        }
+    }
+    public class Parent
+    {
+        public string Name1 { get; set; }
+    }
+    public class Employee:Parent
+    {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+    }
+    public class Customer
+    {
+        public string Name { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           ConstraintsClass<Employee> emp = new ConstraintsClass<Employee>();
+            Employee emp1 = new Employee() { Name ="Maha", Gender = "Female" , Name1 = "Lakshmi"};
+            Console.WriteLine(emp1.Name);
+            Console.WriteLine(emp1.Name1);
+            Console.WriteLine(emp1.Gender);
+            emp.value = emp1;
+            emp.Method(emp1, emp1);
+            //ConstraintsClass<Customer> constraintsClass = new ConstraintsClass<Customer>();//cannot create object for Customer class because t has not inherited from Parent class
+        }
+    }
+}*/
+/*namespace genericConstraintsFORinterface
+{
+    public class ConstraintsClass<T> where T : IParent
+    {
+        public T value { get; set; }
+        public void Method(T a, T b)
+        {
+            Console.WriteLine("Value " + value);
+            Console.WriteLine("a " + a);
+            Console.WriteLine("b " + b);
+        }
+    }
+    public class IParent
+    {
+        public string Name1 { get; set; }
+    }
+    public class Employee : IParent
+    {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+    }
+    public class Customer
+    {
+        public string Name { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConstraintsClass<Employee> emp = new ConstraintsClass<Employee>();
+            Employee emp1 = new Employee() { Name = "Maha", Gender = "Female", Name1 = "Lakshmi" };
+            Console.WriteLine(emp1.Name);
+            Console.WriteLine(emp1.Name1);
+            Console.WriteLine(emp1.Gender);
+            emp.value = emp1;
+            emp.Method(emp1, emp1);
+            //ConstraintsClass<Customer> constraintsClass = new ConstraintsClass<Customer>();//cannot create object for Customer class because t has not inherited from Parent class
+        }
+    }
+}*/
+/*namespace genericConstraintsFORU
+{
+    public class ConstraintsClass<T,U> where T : U
+    {
+        public T value { get; set; }
+        public void Method(T a, T b)
+        {
+            Console.WriteLine("Value " + value);
+            Console.WriteLine("a " + a);
+            Console.WriteLine("b " + b);
+        }
+    }
+    public class IParent
+    {
+        public string Name1 { get; set; }
+    }
+    public class Employee : IParent
+    {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+    }
+    public class Customer:IParent
+    {
+        public string Name { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConstraintsClass<Employee,IParent> emp = new ConstraintsClass<Employee, IParent>();
+            ConstraintsClass<Customer, IParent> emp2 = new ConstraintsClass<Customer, IParent>();
+            Employee emp1 = new Employee() { Name = "Maha", Gender = "Female", Name1 = "Lakshmi" };
+            Console.WriteLine(emp1.Name);
+            Console.WriteLine(emp1.Name1);
+            Console.WriteLine(emp1.Gender);
+            emp.value = emp1;
+            emp.Method(emp1, emp1);
+            //ConstraintsClass<Customer> constraintsClass = new ConstraintsClass<Customer>();//cannot create object for Customer class because t has not inherited from Parent class
+        }
+    }
+}*/
+/*namespace genericConstraintsFORU
+{
+    public class ConstraintsClass<T, X> where T : class where X:struct
+    {
+        public T value { get; set; }
+        public void Method(X a, T b)
+        {
+            Console.WriteLine("Value " + value);
+            Console.WriteLine("a " + a);
+            Console.WriteLine("b " + b);
+        }
+    }
+    public class IParent
+    {
+        public string Name1 { get; set; }
+    }
+    public class Employee : IParent
+    {
+        public string Name { get; set; }
+        public string Gender { get; set; }
+    }
+    public class Customer : IParent
+    {
+        public string Name { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConstraintsClass<string, int> emp = new ConstraintsClass<string, int>();
+            ConstraintsClass<Employee, int> emp2 = new ConstraintsClass<Employee, int>();
+            Employee emp1 = new Employee() { Name = "Maha", Gender = "Female", Name1 = "Lakshmi" };
+            Console.WriteLine(emp1.Name);
+            Console.WriteLine(emp1.Name1);
+            Console.WriteLine(emp1.Gender);
+            emp.value = "Hi";
+            emp.Method(100, "Hello");
+        }
+    }
+}*/
+//Generic Lists
+/*namespace genericLists
+{
+    public class Student
+    {
+        public string Name { get; set; }    
+        public int ID { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> list = new List<int>();
+            list.Add(10);
+            list.Add(20);
+            list.Add(30);
+            list.Add(40);
+            list.Add(50);
+
+            List<int> list2 = new List<int>() { 60, 70, 80, 90, 100 };
+            List<int> list3 = new List<int>() { 300, 400 };
+            int[] arry = new int[] { 500, 290, 900, 800 };
+            List<int> list4 = new List<int>(arry);
+            list.AddRange(list2);
+            list.Insert(1, 200);
+            list.InsertRange(2, list3);
+            Console.WriteLine(list.Contains(60));
+            Console.WriteLine("find:"+list.Find(x => x % 2 == 0));//returns first element which satisfies the condition
+            Console.WriteLine("findAll:"+list.Find(x => x % 2 == 0));
+            IEnumerable<int> result = list.FindAll(x => x % 2 == 0);
+            Console.WriteLine(list.FindIndex(x=>x%2==0));
+            list.Sort();
+            list.Reverse();
+            list.Remove(60);
+            list.RemoveRange(1, 3);
+            list.RemoveAt(2);
+            foreach (int i in list)
+            {
+                Console.WriteLine(i);
+            }
+            list.RemoveAll(x => x % 2 == 0);
+            list.Exists(x => x % 2 == 0);
+            list.Clear();
+            for(int i=0;i<list.Count;i++)
+            {
+                Console.WriteLine(list[i]);
+            }  
+            List<Student> students = new List<Student>();
+            students.Add(new Student() { ID = 101, Name = "Maha" });
+            students.Add(new Student() { ID = 102, Name = "Swathi" });
+            List<Student> students2 = new List<Student>() { new Student() { ID = 103, Name = "Nitesh" } };
+            students.AddRange(students2);
+            foreach (Student student in students)
+            {
+                Console.WriteLine(student.ID + ":" + student.Name);
+            }
+            Console.WriteLine(students[0].ID);
+        }
+    }
+}*/
+//Generic Dictionary
+/*namespace genericDictionary
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<int, string> dict = new Dictionary<int, string>();
+            dict.Add(1, "Maha");
+            dict.Add(2, "Swathi");
+            dict.Add(3, "Nitesh");
+            dict.Add(4, "Lakshmi");
+            dict.Add(5, "Karthik");
+            dict.Add(6, "Sai");
+            bool result = dict.ContainsKey(4);
+            bool result1 = dict.ContainsValue("Nitesh");
+            dict.Remove(5);
+            //dict.Clear();
+            dict.AsParallel().ForAll(x => Console.WriteLine(x.Key+"\t"+x.Value));
+            Console.WriteLine(result);
+            foreach (KeyValuePair<int, string> kvp in dict)
+            {
+                Console.WriteLine(kvp.Key + ":" + kvp.Value);
+            }
+        }
+    }
+}*/
+//Generic Stack
+/*namespace genericstack
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stack<int> stk = new Stack<int>();
+            stk.Push(10);
+            stk.Push(20);
+            stk.Push(30);
+            stk.Push(40);
+            stk.Push(50);
+            stk.Pop();
+            Console.WriteLine(stk.Peek());
+            Console.WriteLine(stk.Contains(40));
+            //stk.Clear();
+            int[] s = new int[5] { 60, 70, 80, 90, 100 };
+            stk.CopyTo(s, 0);
+            foreach (int i in stk)
+            {
+                Console.WriteLine(i);
+            }
+        }
+    }
+}*/
+//Generic Queue
+/*namespace genericqueue
+{
+    public class Student
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Queue<Student> students = new Queue<Student>();
+            Student s1 = new Student() { ID = 101, Name = "Maha" };
+            Student s2 = new Student() { ID = 102, Name = "Swathi" };
+            Student s3 = new Student() { ID = 103, Name = "Nitesh" };
+            students.Enqueue(s1);
+            students.Enqueue(s2);
+            students.Enqueue(s3);
+            foreach (Student student in students)
+            {
+                Console.WriteLine(student.ID + ":" + student.Name);
+            }
+            Queue<int> ints = new Queue<int>();
+            ints.Enqueue(10);
+            ints.Enqueue(20);
+            ints.Enqueue(30);
+            ints.Enqueue(40);
+            ints.Enqueue(50);
+            ints.Dequeue();
+            //ints.Clear();
+            ints.Peek();
+            Console.WriteLine(ints.Contains(40));
+            int[] s = new int[5] { 60, 70, 80, 90, 100 };
+            ints.CopyTo(s, 0);
+            foreach (int i in ints)
+            {
+                Console.WriteLine(i);
+            }
+        }
+    }
+}*/
+//Generic hashset
+/*namespace generichashset
+{
+    class Program
+    {
+        //unionwith
+        //Interset
+        //Exceptwith
+        //SymmetricExceptWith
+        static void Main(string[] args)
+        {
+            HashSet<string> hs = new HashSet<string>();
+            hs.Add("Maha");
+            hs.Add("Swathi");
+            hs.Add("Nitesh");
+            hs.Add("Lakshmi");
+            hs.Add("Karthik");
+            hs.Add("Sai");
+            HashSet<string> hs1 = new HashSet<string>();
+            hs1.Add("Hi");
+            hs1.Add("Hello");
+
+            *//*hs.Remove("Sai");
+            hs.RemoveWhere(x => x.Length >5); 
+            Console.WriteLine(hs.Contains("Maha"));*//*
+            hs1.Intersect(hs);
+            hs1.UnionWith(hs);
+            hs1.ExceptWith(hs);
+            hs1.SymmetricExceptWith(hs);
+        }
+    }
+    
+}*/
+//Generic SortedList
+/*namespace genericsortedList
+{
+    public class Student
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            SortedList<int,Student> keyValuePairs = new SortedList<int, Student>();
+            Student s1 = new Student() { ID = 101, Name = "AAA" };
+            Student s2 = new Student() { ID = 102, Name = "BBB" };
+            Student s3 = new Student() { ID = 103, Name = "CCC" };
+            keyValuePairs.Add(1, s1);
+            keyValuePairs.Add(2, s2);
+            keyValuePairs.Add(3, s3);
+            foreach (KeyValuePair<int, Student> kvp in keyValuePairs)
+            {
+                Console.WriteLine(kvp.Key + ":" + kvp.Value.ID + ":" + kvp.Value.Name);
+            }
+            SortedList<int, string> sl = new SortedList<int, string>();
+            sl.Add(1, "Maha");
+            sl.Add(2, "Swathi");
+            sl.Add(3, "Nitesh");
+            sl.Add(1, "Maha");
+            sl.Add(4, "Lakshmi");
+            sl.Add(5, "Karthik");
+            sl.RemoveAt(2);
+            //sl.Clear();
+            Console.WriteLine(sl.ContainsKey(4));
+            Console.WriteLine(sl.ContainsValue("Nitesh"));
+            foreach (KeyValuePair<int, string> kvp in sl)
+            {
+                Console.WriteLine(kvp.Key + ":" + kvp.Value);
+            }
+
+        }
+    }
+}*/ 
+//Generic sortedset
+/*namespace genericsortedlist
+{
+    class program
+    {
+        static void Main(string[] args)
+        {
+            SortedSet<int> ss = new SortedSet<int>();
+            ss.Add(10);
+            ss.Add(20);
+            ss.Add(30);
+            ss.Add(40);
+            ss.Add(50);
+            SortedSet<int> ss1 = new SortedSet<int>() { 60, 70, 80, 90, 100 };
+            int[] list = new int[] { 200, 300, 400, 500 };
+            SortedSet<int> ss2 = new SortedSet<int>(list);
+            ss.CopyTo(list, 0);
+            ss.UnionWith(ss1);
+            ss.IntersectWith(ss1);
+            ss.ExceptWith(ss1);
+            ss.SymmetricExceptWith(ss1);
+            ss.Remove(40);
+            ss.RemoveWhere(x => x%2 == 0);
+            //ss.clear();
+            Console.WriteLine(ss.Contains(30));
+            foreach (int i in ss)
+            {
+                Console.WriteLine(i);
+            }
+            SortedSet<int>.Enumerator en = ss.GetEnumerator();
+            while (en.MoveNext())
+            {
+                Console.WriteLine(en.Current);
+            }
+        }
+    }
+}*/
+//Generic SortedDictionary
+/*namespace genericsorteddictionary
+{
+    public class Student
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            SortedDictionary<int, Student> keyValuePairs = new SortedDictionary<int, Student>();
+            Student s1 = new Student() { ID = 101, Name = "AAA" };
+            Student s2 = new Student() { ID = 102, Name = "BBB" };
+            Student s3 = new Student() { ID = 103, Name = "CCC" };
+            keyValuePairs.Add(1, s1);
+            keyValuePairs.Add(2, s2);
+            keyValuePairs.Add(3, s3);
+            foreach (KeyValuePair<int, Student> kvp in keyValuePairs)
+            {
+                Console.WriteLine(kvp.Key + ":" + kvp.Value.ID + ":" + kvp.Value.Name);
+            }
+            SortedDictionary<int, string> sl = new SortedDictionary<int, string>();
+            sl.Add(1, "Maha");
+            sl.Add(2, "Swathi");
+            sl.Add(3, "Nitesh");
+            sl.Add(6, "Maha");
+            sl.Add(4, "Lakshmi");
+            sl.Add(5, "Karthik");
+            //sl.Clear();
+            Console.WriteLine(sl.ContainsKey(4));
+            Console.WriteLine(sl.ContainsValue("Nitesh"));
+            foreach (KeyValuePair<int, string> kvp in sl)
+            {
+                Console.WriteLine(kvp.Key + ":" + kvp.Value);
+            }
+
+        }
+    }
+} */
+//Concurrency Collection
+/*namespace concurrencycollection
+{
+    class  Program
+    {
+        static ConcurrentDictionary<int, string> dict = new ConcurrentDictionary<int, string>();
+        static void Main(string[] args)
+        {
+            Thread t1 = new Thread(Add1);
+            Thread t2 = new Thread(Add2);
+            t1.Start();
+            t2.Start();
+            t1.Join();
+            t2.Join();
+            foreach (KeyValuePair<int, string> kvp in dict)
+            {
+                Console.WriteLine(kvp.Key + ":" + kvp.Value);
+            }
+
+        }
+        public static void Add1()
+        {
+            for(int i=0;i<10;i++)
+            {
+                dict.TryAdd(i, "Maha"+i);
+                Thread.Sleep(100);
+            }
+        }
+        public static void Add2()
+        {
+            for (int i = 10; i < 20; i++)
+            {
+                dict.TryAdd(i, "Swathi" + i);
+                Thread.Sleep(100);
+            }
+        }
+    }
+}*/
