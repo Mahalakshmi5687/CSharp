@@ -2186,7 +2186,7 @@ call by reference with reference type*/
     }
 }*/
 /*Advantages and disadvantages of non-generic collections:
- Array: Type-safe but not fixed Lenght
+ Array: Type-safe but have fixed Lenght
 Collection: Auto resizing but not type-safe
 Generic Collection: Type-safe and Auto-Resizing but not Thread safety*/
 
