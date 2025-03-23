@@ -2875,3 +2875,512 @@ nullable reference type, T may be either nullable or non-nullable.*/
         }
     }
 }*/
+//Concurrency Collection
+//Generic Dictionary with thread safety Problem
+/*namespace threadSafety
+{
+    class Program
+    {
+        static Dictionary<int, string> dict = new Dictionary<int, string>();
+        static void Main(string[] args)
+        {
+            Thread t1 = new Thread(Add1);
+            Thread t2 = new Thread(Add2);
+            t1.Start();
+            t2.Start();
+        }   
+        public static void Add1()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                dict.Add(i, "Maha" + i);
+                Thread.Sleep(100);
+            }
+        }
+        public static void Add2()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                dict.Add(i, "Swathi" + i);
+                Thread.Sleep(100);
+            }
+        }
+    }
+}
+//Gives error like Key already exists*/
+/*namespace concurrencycollection
+{
+    class Program
+    {
+        static ConcurrentDictionary<int, string> dict = new ConcurrentDictionary<int, string>();
+        static void Main(string[] args)
+        {
+            Thread t1 = new Thread(Add1);
+            Thread t2 = new Thread(Add2);
+            t1.Start();
+            t2.Start();
+            t1.Join();
+            t2.Join();
+            foreach (KeyValuePair<int, string> kvp in dict)
+            {
+                Console.WriteLine(kvp.Key + ":" + kvp.Value);
+            }
+
+        }
+        public static void Add1()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                dict.TryAdd(i, "Maha" + i);
+                Thread.Sleep(100);
+            }
+        }
+        public static void Add2()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                dict.TryAdd(i, "Swathi" + i);
+                Thread.Sleep(100);
+            }
+        }
+    }
+}*/
+//Concurrent Dictionary
+/*namespace concurrenctdictionary
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConcurrentDictionary<int, string> Countries = new ConcurrentDictionary<int, string>();
+
+            Countries.TryAdd(1, "India");
+            Countries.TryAdd(2, "USA");
+            Countries.TryAdd(3, "UK");
+            Countries.TryAdd(4, "Australia");
+            Countries.TryAdd(5, "Canada");
+
+            //tryUpdate
+            //AddorUpdate
+            //getorAdd
+            //trygetValue
+            
+            Countries.TryUpdate(1, "Japan", "India");
+            Countries.AddOrUpdate(1, "Japan", (k, v) => "India");
+            Countries.AddOrUpdate(6, "Japan", (k, v) => "India");
+
+            Console.WriteLine(Countries.GetOrAdd(7, "China"));
+            Countries.TryGetValue(5, out string res1);
+            Console.WriteLine(res1);
+
+            Console.WriteLine("Total Countries: " + Countries.Count);
+            Console.WriteLine(Countries.ContainsKey(3));
+
+            foreach (KeyValuePair<int, string> kvp in Countries)
+            {
+                Console.WriteLine(kvp.Key + ":" + kvp.Value);
+            }
+        }
+    }
+}*/
+//concurrentstack
+/*namespace nonconcurrentstack
+{
+    class Program
+    {
+        static object lockobj = new object();
+        static void Main(string[] args)
+        {
+            TestStack();
+        }
+        public static void TestStack()
+        {
+            Stack<string> Borders = new Stack<string>();
+            *//*GetOrders("AAA", Borders);
+            GetOrders("BBB", Borders);*//*
+            Task t1 = Task.Run(()=>GetOrders("AAA", Borders));
+            Task t2 = Task.Run(()=>GetOrders("BBB", Borders));
+            Task.WaitAll(t1, t2);
+            foreach (var item in Borders)
+            {
+                Console.WriteLine(item);
+            }
+
+        }
+        public static void GetOrders(string CustName, Stack<string> Borders)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Thread.Sleep(100);
+                string order = CustName + "Needs" + (i + 3) + "Items";
+                lock (lockobj)
+                {
+                    Borders.Push(order);
+                }
+                
+            }
+        }
+    }
+}*/
+/*namespace concurrentstack
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConcurrentStack<string> stack = new ConcurrentStack<string>();
+            stack.Push("Maha");
+            stack.Push("Swathi");
+            stack.Push("Nitesh");
+            stack.Push("Lakshmi");
+            stack.Push("Karthik");
+
+            stack.TryPop(out string result);
+            Console.WriteLine(result);
+            stack.TryPeek(out string result1);
+            Console.WriteLine(result1);
+
+            string[] strings = new string[5];
+            stack.CopyTo(strings, 0);
+
+            foreach (var item in strings)
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+}*/
+/*namespace concurrentqueue
+{
+    class Program
+    {
+        public class Student
+        {
+            public int ID { get; set; }
+            public string Name { get; set; }
+        }
+        static void Main(string[] args)
+        {
+            ConcurrentQueue<Student> queue = new ConcurrentQueue<Student>();
+            *//*queue.Enqueue("Maha");
+            queue.Enqueue("Swathi");
+            queue.Enqueue("Nitesh");
+            queue.Enqueue("Lakshmi");
+            queue.Enqueue("Karthik");
+            queue.TryPeek(out string result1);
+            Console.WriteLine(result1);
+            queue.TryDequeue(out string result);
+            Console.WriteLine(result);
+            Console.WriteLine("-------------------");
+            foreach (var item in queue)
+            {
+                Console.WriteLine(item);
+            }
+            string[] strings = new string[5];
+            queue.CopyTo(strings, 0);
+            foreach (var item in strings)
+            {
+                Console.WriteLine(item);
+            }*//*
+            Student s1 = new Student();
+            s1.ID = 1;
+            s1.Name = "Maha";
+
+            Student s2 = new Student();
+            s2.ID = 2;
+            s2.Name = "Swathi";
+
+            Student s3 = new Student();
+            s3.ID = 3;
+            s3.Name = "Nitesh";
+
+            queue.Enqueue(s1);
+            queue.Enqueue(s2);
+            queue.Enqueue(s3);
+
+            foreach (var item in queue)
+            {
+                Console.WriteLine(item.ID + ":" + item.Name);
+            }
+        }
+    }
+}*/
+//ConcurrentBag
+/*concurrent bag is same as like generic list but generic list is not thread safety 
+ concurrent bag stored unordered and can store duplicate values*/
+/*namespace genericlistwiththreads
+{
+    class Program
+    {
+        static object lockobj = new object();
+        static void Main(string[] args)
+        {
+            TestBag();
+        }
+        public static void TestBag()
+        {
+            List<string> bag = new List<string>();
+           *//* GetOrders("AAA", bag);
+            GetOrders("BBB", bag);*//*
+           Task t1 = Task.Run(() => GetOrders("AAA", bag));
+            Task t2 = Task.Run(() => GetOrders("BBB", bag));
+            Task.WaitAll(t1, t2);
+            foreach (var item in bag)
+            {
+                Console.WriteLine(item);
+            }
+        }
+        public static void GetOrders(string CustName,List<string> orders)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Thread.Sleep(100);
+                string order = CustName + "Needs" + (i + 3) + "Items";
+                lock (lockobj)
+                {
+                    orders.Add(order);
+                }
+                
+            }
+        }   
+    }
+}*/
+/*namespace concurrentbag
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ConcurrentBag<string> bag = new ConcurrentBag<string>();
+            bag.Add("Maha");
+            bag.Add("Swathi");
+            bag.Add("Nitesh");
+            bag.Add("Lakshmi");
+            bag.Add("Karthik");
+            bag.TryTake(out string result);
+            bag.TryPeek(out string result1);
+            Console.WriteLine(result1);
+            Console.WriteLine(result);
+            Console.WriteLine("-------------------");
+            foreach (var item in bag)
+            {
+                Console.WriteLine(item);
+            }
+            string[] array = bag.ToArray();
+            foreach (var item in array)
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+}*/
+//Optional Parameters
+/*namespace optionalParameters
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Add(10, 20);
+            Add(10, 20, 30);
+            Add(10, 20, 30, 40);
+            function(10, 20, 30, 40, 50);
+            Add(10, 20,d: 1);
+            function(10, 20);
+            function(10, 20, new int[] { 30, 40, 50 });
+        }
+        public static void Add(int a, int b, int c = 0, int d = 0)
+        {
+            Console.WriteLine(a + b + c + d);
+        }
+        *//*public static void function(int a,int b, params int[] nums)
+        {
+            int result = a + b;
+            foreach(int i in nums)
+            {
+                result += i;
+            }
+            Console.WriteLine(result);
+        }*//*
+        public static void function(int a, [Optional] int b, params int[] nums)
+        {
+            int result = a + b;
+            foreach (int i in nums)
+            {
+                result += i;
+            }
+            Console.WriteLine(result);
+        }
+        public static void function(int a, int b)
+        {
+            int result = a + b;
+            Console.WriteLine(result);
+        }
+    }
+}*/
+//Indexers
+/*The indexers in c# is a property of a class that allows us to access a member variable of a class using the features of an array.
+ That means the indexers in c# are the members of a class and if we define indexers in a class then the class behaves like a virtual array.
+So, the indexers in c# allow instances of a class to be indexed just like arrays.
+The indexed value can be set or retrieved without explicitly specifying a type or instance member.*/
+/*namespace indexers
+{
+    public class Employee
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Gender { get; set; }
+        public double Salary { get; set; }
+        public string Department { get; set; }
+        public Employee(int id, string name, string  gender, double salary, string department)
+        {
+            this.ID = id;
+            this.Name = name;
+            this.Gender = gender;
+            this.Salary = salary;
+            this.Department = department;
+        }
+        public object this[int index]
+        {
+            get
+            {
+                if (index == 0)
+                    return ID;
+                else if (index == 1)
+                    return Name;
+                else if (index == 2)
+                    return Gender;
+                else if (index == 3)
+                    return Salary;
+                else if (index == 4)
+                    return Department;
+                return null;
+            }
+            set
+            {
+                if (index == 0)
+                    ID = (int)value;
+                else if (index == 1)
+                    Name = (string)value;
+                else if (index == 2)
+                    Gender = (string)value;
+                else if (index == 3)
+                    Salary = (double)value;
+                else if (index == 4)
+                    Department = (string)value;
+            }
+        }
+        public object this[string index]
+        {
+            get
+            {
+                if (index == "ID")
+                    return ID;
+                else if (index == "Name")
+                    return Name;
+                else if (index == "Gender")
+                    return Gender;
+                else if (index == "Salary")
+                    return Salary;
+                else if (index == "Department")
+                    return Department;
+                return null;
+            }
+            set
+            {
+                if (index == "ID")
+                    ID = (int)value;
+                else if (index == "Name")
+                    Name = (string)value;
+                else if (index == "Gender")
+                    Gender = (string)value;
+                else if (index == "Salary")
+                    Salary = (double)value;
+                else if (index == "Department")
+                    Department = (string)value;
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee emp = new Employee(101, "Ravi","Male",12000,"IT");
+            Console.WriteLine("ID=" + emp[0]);
+            Console.WriteLine("Name=" + emp[1]);
+            Console.WriteLine("Gender=" + emp[2]);
+            Console.WriteLine("Salary=" + emp[3]);
+            Console.WriteLine("Department=" + emp[4]);
+            emp["ID"] = 2;
+            emp["Salary"] = 70000.0;
+            Console.WriteLine("ID=" + emp["ID"]);
+            Console.WriteLine("Name=" + emp["Name"]);
+            Console.WriteLine("Gender=" + emp["Gender"]);
+            Console.WriteLine("Salary=" + emp["Salary"]);
+            Console.WriteLine("Department=" + emp["Department"]);
+        }
+    }
+}*/
+//File Handling
+/*A file is a collection of data stored on a disk with a specific name, extension, and directory path. When you open file using c# for reading and writing purposes it becomes Stream.
+ What is Stream?
+A stream is a sequence of bytes travelling from a source to a destination over a communication path.
+There are two main streams: the Input Stream and the Output Stream.
+The input stream is used for reading data from a file(read operation) and the output stream is used for writing into the file(write operation).
+Input Stream: This Stream is used to read from a file, which is known as a read operation.
+Output Stream: This Stream is used to write data into file, which is known as a write operation.
+File Handling in C#:
+Generally, we use the file to store data.
+Reading: This operation is the basic read operation where the data is going to be read from a file.
+Writing: This operation is the basic write operation where the data is going to be written to a file. By default, all existing contents are removed from the file, and new content is written in the file.
+Appending: With Append, the new data is going to be added at the end of the file.
+The file becomes a stream when we open the file either for writing or for reading.
+namespace System.IO
+{
+    public enum FileMode
+    {
+        CreateNew = 1,
+        Create = 2,
+        Open = 3,
+        OpenOrCreate = 4,
+        Truncate = 5,
+        Append = 6
+    }
+}
+namespace System.IO
+{
+    public enum FileAccess
+    {
+        Read = 1,
+        Write = 2,
+        ReadWrite = 3
+    }
+}
+namespace System.IO
+{
+    public enum FileShare
+    {
+        None = 0,
+        Read = 1,
+        Write = 2,
+        ReadWrite = 3,
+        Delete = 4,
+        Inheritable = 16
+    }
+}*/
+namespace fileStream
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string path = @"C:\Text.txt";
+            //FileStream fs = new FileStream(path, FileMode.Create);
+            FileStream fs = new FileStream(path, FileMode.Append);
+            byte[] bytedata = Encoding.Default.GetBytes("Hello World");
+            fs.Write(bytedata, 0, bytedata.Length);                
+            fs.Close();
+            Console.WriteLine("File Created Successfully");
+        }
+    }
+}
