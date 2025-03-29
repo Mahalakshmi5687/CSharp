@@ -3384,3 +3384,558 @@ namespace fileStream
         }
     }
 }
+//StreamReader and StreamWriter
+/*namespace streamReaderWriter
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string path = @"C:\Text.txt";
+            *//*StreamWriter sw = new StreamWriter(path);
+            Console.WriteLine("Enter Text:");
+            string input = Console.ReadLine();
+            sw.Write(input);
+            Console.WriteLine("Done");
+            sw.Flush();
+            sw.Close();*/
+
+/*StreamReader sr = new StreamReader(path);
+sr.BaseStream.Seek(0, SeekOrigin.Begin);
+string data = sr.ReadLine();
+while(data!=null)
+{
+    Console.WriteLine(data);
+    data = sr.ReadLine();
+}
+sr.Close();*//*
+using (StreamReader sr = new StreamReader(path))
+{
+    Console.WriteLine(sr.ReadToEnd());
+}
+}
+}
+}*/
+//File Class:
+/*COpy, Create, Decrypt, Delete, Encrypt, Open, Move, Exists, OpenRead, OpenText, OpenWrite,
+ ReadAllBytes, ReadAllLines, ReadAllText, WriteAllBytes, WriteAllLines, WriteAllText*/
+/*namespace fileclasses
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string Path = @"C:\Text.txt";
+            string Path1 = @"C:\Text1.txt";
+            File.Copy(Path, Path1);
+            File.Delete(Path1);
+            *//*if(File.Exists(Path))
+            {
+                string[] lines = File.ReadAllLines(Path);
+                foreach (string line in lines)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+            else
+            {
+                Console.WriteLine("File Not Exists");
+            }*//*
+        }
+    }
+}*/
+//TextWriter and TextReader
+/*The TextReader and TextWriter classes in C# are another way to read and write files respectively, even though these are not stream classes.
+ The TextReader and TextWriter are base classes.
+The StreamReader and StringReader derive from the abstract type TextReader.
+Similarly, the StreamWriter and StringWriter derive from the abstract type TextWriter.
+What is TextWriter class in c#?
+The TextWriter class in c# represents a writer that can write sequential series of characters. We can use this TextWriter class to write text in a file.
+It is an abstract base class of StreamWriter and StringWriter, which write characters to streams and strings respectively.
+It is used to write text or sequetial series of characters into files.*/
+/*namespace textreadwrite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // MethodA();
+            *//* string Path = @"C:\Text.txt";
+             using (TextWriter writer = File.CreateText(Path))
+             {
+                 writer.WriteLine("Hi");
+                 writer.WriteLine("Hello");
+             }
+             Console.WriteLine("File Created Successfully");*//*
+            string Path = @"C:\Text.txt";
+            using (TextReader reader = File.OpenText(Path))
+            {
+               Console.WriteLine(reader.ReadToEnd());
+            }
+           
+        }
+        *//*public static async void MethodA()
+        {
+            string Path = @"C:\Text.txt";
+            using (TextWriter writer = File.CreateText(Path))
+            {
+                await writer.WriteLineAsync("Hi");
+                await writer.WriteLineAsync("Hello");
+            }
+            Console.WriteLine("File Created Successfully");
+
+        }*//*
+    }
+}*/
+//BinaryReader and BinaryWriter
+/*namespace binaryReadWrite
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            *//*using (BinaryWriter writer = new BinaryWriter(File.Open("D:\\Text.bin", FileMode.Create)))
+            {
+                writer.Write("Hello");
+                writer.Write(true);
+                writer.Write(10.43879);
+            }
+            Console.WriteLine("File Created Successfully");*//*
+            using (BinaryReader reader = new BinaryReader(File.Open("D:\\Text.bin", FileMode.Open)))
+            {
+                Console.WriteLine(reader.ReadString());
+                Console.WriteLine(reader.ReadBoolean());
+                Console.WriteLine(reader.ReadDouble());
+            }
+            Console.WriteLine("File Created Successfully");
+        }
+    }
+}*/
+//StringWriter and StringReader
+/*To manipulate only for string*/
+/*namespace stringReaderWriter
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string text = "Hello Hi This is Dotnet \n File Handling Concept \n Working on StringWriter";
+            StringBuilder sb = new StringBuilder();
+            StringWriter sw = new StringWriter(sb);
+            sw.WriteLine(text);
+            sw.Flush();
+            sw.Close();
+
+            StringReader sr = new StringReader(sb.ToString());
+            while(sr.Peek() > -1)
+            {
+                Console.WriteLine(sr.ReadLine());
+            }
+        }
+    }
+}*/
+//FileInfo Class
+/*The FileInfo class in C# is used for manipulating files such as creating, deleting, removing, copying, opening, and getting information.
+ The fileInfo class provides several properties and methods that make file manipulation easy.
+FileInfo class is used for typical file operations like copying, moving, renaming, creating, opening, deleting, and appending the file.
+By default, full read/write access to new files is granted to all users.
+It is a sealed class and hence it cannot be inherited.*/
+/*namespace fileinfoClass
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string path = @"C:\Text.txt";
+            FileInfo file = new FileInfo(path);
+            *//*StreamWriter sw = file.CreateText();
+            //file.Create();
+            sw.WriteLine("Hello");
+            Console.WriteLine("Text Created");*//*
+            file.Delete();
+            Console.WriteLine("File Deleted");
+           // sw.Close();
+            string path1 = @"C:\Text1.txt";
+            FileInfo file1 = new FileInfo(path1);
+            StreamWriter sw = file1.CreateText();
+            sw.WriteLine("Hello");
+            sw.Close();
+            file.CopyTo(path1);
+            Console.WriteLine("File Copied");
+            file1.MoveTo(@"C:\Text2.txt");
+
+        }
+    }
+}*/
+//DirectoryInfo Class
+/*The DirectoryInfo class in C# is used for manipulating directories such as creating, deleting, moving, and enumerating directories.
+ * The DirectoryInfo class provides several properties and methods that make directory manipulation easy.*/
+/*namespace directoryInfoClass
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string path = @"C:\Test";
+            DirectoryInfo dir = new DirectoryInfo(path);
+            dir.Create();
+            Console.WriteLine("Directory Created");
+            dir.Delete();
+            Console.WriteLine("Directory Deleted");
+            DirectoryInfo dir1 = new DirectoryInfo(@"C:\Test1");
+            dir1.Create();
+            dir1.MoveTo(@"C:\Test2");
+            Console.WriteLine("Directory Moved");
+        }
+    }
+}*/
+//Automapper 
+/*The AutoMapper in C# is a mapper between two objects.
+ That is AutoMapper is an Object-Object Mapper.
+It maps the properties of two different objects by transforming the input 
+object of one type to the output of another tyep
+if column names are different we use formember method*/
+/*namespace automapper1
+{
+    public class Employee
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Department { get; set; }
+    }
+
+    public class EmployeeDTO
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Dept { get; set; }
+    }
+
+    public class MapperConfig
+    {
+        public static IMapper InitializeAutoMapper()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Employee, EmployeeDTO>();
+            });
+
+            return config.CreateMapper(); 
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee emp = new Employee()
+            {
+                Id = 101,
+                Name = "Maha",
+                Address = "Hyderabad",
+                Department = "IT"
+            };
+
+           *//* var mapper = MapperConfig.InitializeAutoMapper();
+            EmployeeDTO empDTO = mapper.Map<EmployeeDTO>(emp);*//*
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Employee, EmployeeDTO>().ForMember(dest=>dest.Dept, act=>act.MapFrom(src=>src.Department));
+            });
+            var mapper = config.CreateMapper();
+            var empDTO = mapper.Map<EmployeeDTO>(emp);
+
+            Console.WriteLine($"Id: {empDTO.Id}, Name: {empDTO.Name}, Address: {empDTO.Address}, Department: {empDTO.Dept}");
+        }
+    }
+}*/
+//AutoMapper Complex Mapping
+/*namespace automapper2
+{
+    public class Address
+    {
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+    }
+    public class AddressDTO
+    {
+        public string CityName { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+    }
+    public class Employee
+    {
+        public string Name { get; set; }
+        public string Department { get; set; }
+        public Address Address { get; set; }
+    }
+    public class EmployeeDTO
+    {
+        public string Name { get; set; }
+        public string Department { get; set; }
+        public AddressDTO Address { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Address empaddress = new Address
+            {
+                City = "Hyderabad",
+                State = "Telangana",
+                Country = "India"
+            };
+            Employee emp = new Employee
+            {
+                Name = "Maha",
+                Department = "IT",
+                Address = empaddress
+            };
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Address, AddressDTO>().ForMember(des=> des.CityName, act=> act.MapFrom(src=>src.City));
+                cfg.CreateMap<Employee, EmployeeDTO>();
+            });
+            var mapper = config.CreateMapper();
+            var empDTO = mapper.Map<EmployeeDTO>(emp);
+            Console.WriteLine($"Name: {empDTO.Name}, Department: {empDTO.Department}, City: {empDTO.Address.CityName}, State: {empDTO.Address.State}, Country: {empDTO.Address.Country}"); 
+        }
+    }
+}*/
+//Map complex type to primitive type and primitive type to complex type
+//complex type to primitive type
+/*namespace automapper3
+{
+    public class Address
+    {
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+    }
+    public class Employee
+    {
+        public string Name { get; set; }
+        public string Department { get; set; }
+        public Address Address { get; set; }
+    }
+    public class EmployeeDTO
+    {
+        public string Name { get; set; }
+        public string Department { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Address empaddress = new Address
+            {
+                City = "Hyderabad",
+                State = "Telangana",
+                Country = "India"
+            };
+            Employee emp = new Employee
+            {
+                Name = "Maha",
+                Department = "IT",
+                Address = empaddress
+            };
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Employee, EmployeeDTO>()
+                .ForMember(des => des.City, act => act.MapFrom(src => src.Address.City))
+                .ForMember(des => des.State, act => act.MapFrom(src => src.Address.State))
+                .ForMember(des => des.Country, act => act.MapFrom(src => src.Address.Country));
+            });
+            var mapper = config.CreateMapper();
+            var empDTO = mapper.Map<EmployeeDTO>(emp);
+            Console.WriteLine($"Name: {empDTO.Name}, Department: {empDTO.Department}, City: {empDTO.City}, State: {empDTO.State}, Country: {empDTO.Country}");
+        }
+    }
+}*/
+//Primitive type to complex type
+/*namespace automapper3
+{
+    public class Address
+    {
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+    }
+    public class Employee
+    {
+        public string Name { get; set; }
+        public string Department { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+    }
+    public class EmployeeDTO
+    {
+        public string Name { get; set; }
+        public string Department { get; set; }
+        public Address Address { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee emp = new Employee
+            {
+                Name = "Maha",
+                Department = "IT",
+                City = "Hyderabad",
+                State = "Telangana",
+                Country = "India"
+            };
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Employee, EmployeeDTO>()
+                .ForMember(des => des.Address, act => act.MapFrom(src => new Address()
+                {
+                    City = src.City,
+                    State = src.State,
+                    Country = src.Country
+                }));
+            });
+            var mapper = config.CreateMapper();
+            var empDTO = mapper.Map<EmployeeDTO>(emp);
+            Console.WriteLine($"Name: {empDTO.Name}, Department: {empDTO.Department}, City: {empDTO.Address.City}, State: {empDTO.Address.State}, Country: {empDTO.Address.Country}");
+        }
+    }
+}*/
+//Automapper Reverse Mapping
+/*namespace automapper4
+{
+    public class Customer
+    {
+        public int CustomerID { get; set; }
+        public string FullName { get; set; }
+        public string Postcode { get; set; }
+        public string ContactNo { get; set; }
+    }
+    public class Order
+    {
+        public int OrderNo { get; set; }
+        public int NumberOfItems { get; set; }
+        public decimal TotalAmount { get; set; }
+        public Customer Customer { get; set; }
+    }
+    public class OrderDTO
+    {
+        public int OrderId { get; set; }
+        public int NumberOfItems { get; set; }
+        public decimal TotalAmount { get; set; }
+        public int CustomerId { get; set; }
+        public string Name { get; set; }
+        public string Postcode { get; set; }
+        public string MobileNo { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Customer cust = new Customer
+            {
+                CustomerID = 101,
+                FullName = "Maha",
+                Postcode = "500072",
+                ContactNo = "1234567890"
+            };
+            Order ordobj = new Order()
+            {
+                OrderNo = 1,
+                NumberOfItems = 10,
+                TotalAmount = 1000,
+                Customer = cust
+            };
+            *//* var config = new MapperConfiguration(cfg =>
+             {
+                 cfg.CreateMap<Order, OrderDTO>()
+                 .ForMember(des => des.OrderId, act => act.MapFrom(src => src.OrderNo))
+                 .ForMember(des => des.CustomerId, act => act.MapFrom(src => src.Customer.CustomerID))
+                 .ForMember(des => des.Name, act => act.MapFrom(src => src.Customer.FullName))
+                 .ForMember(des => des.MobileNo, act => act.MapFrom(src => src.Customer.ContactNo));
+             });
+             var mapper = config.CreateMapper();
+             var orderDTO = mapper.Map<OrderDTO>(ordobj);
+             Console.WriteLine($"OrderNo: {orderDTO.OrderId}, NumberOfItems: {orderDTO.NumberOfItems}, TotalAmount: {orderDTO.TotalAmount}, CustomerId: {orderDTO.CustomerId}, Name: {orderDTO.Name}, Postcode: {orderDTO.Postcode}, MobileNo: {orderDTO.MobileNo}");*//*
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Order, OrderDTO>()
+                .ForMember(des => des.OrderId, act => act.MapFrom(src => src.OrderNo))
+                .ForMember(des => des.CustomerId, act => act.MapFrom(src => src.Customer.CustomerID))
+                .ForMember(des=>des.Postcode, act=>act.MapFrom(src=>src.Customer.Postcode))
+                .ForMember(des => des.Name, act => act.MapFrom(src => src.Customer.FullName))
+                .ForMember(des => des.MobileNo, act => act.MapFrom(src => src.Customer.ContactNo)).ReverseMap();
+            });
+            var mapper = config.CreateMapper();
+            var orderDTO = mapper.Map<OrderDTO>(ordobj);
+            Console.WriteLine("Before reverse mapping:");
+            Console.WriteLine($"OrderNo: {orderDTO.OrderId}, NumberOfItems: {orderDTO.NumberOfItems}, TotalAmount: {orderDTO.TotalAmount}, CustomerId: {orderDTO.CustomerId}, Name: {orderDTO.Name}, Postcode: {orderDTO.Postcode}, MobileNo: {orderDTO.MobileNo}");
+            orderDTO.Name = "Swathi";
+            orderDTO.Postcode = "50007267";
+            orderDTO.MobileNo = "12345678908795";
+            orderDTO.OrderId = 2;
+            orderDTO.NumberOfItems = 20;
+            orderDTO.TotalAmount = 2000;
+            orderDTO.CustomerId = 102;
+            mapper.Map(orderDTO, ordobj);
+            Console.WriteLine("After reverse mapping:");
+            Console.WriteLine($"OrderNo: {ordobj.OrderNo}, NumberOfItems: {ordobj.NumberOfItems}, TotalAmount: {ordobj.TotalAmount}, CustomerId: {ordobj.Customer.CustomerID}, Name: {ordobj.Customer.FullName}, Postcode: {ordobj.Customer.Postcode}, MobileNo: {ordobj.Customer.ContactNo}");
+        }
+    }
+}*/
+//Automapper Conditional mapping
+namespace automapper5
+{
+    public class Product
+    {
+        public int ProductID { get; set; }
+        public string Name { get; set; }
+        public string OptionalName { get; set; }
+        public int Quantity { get; set; }
+        public int Amount { get; set; }
+    }
+    public class ProductDTO
+    {
+        public int ProductID { get; set; }
+        public string ItemName { get; set; }
+        public int Quantity { get; set; }
+        public int Amount { get; set; }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Product product = new Product()
+            {
+                ProductID = 101,
+                Name = "Laptop",
+                OptionalName = "Product name not start with A",
+                Quantity = -3,
+                Amount = 1000
+            };
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Product, ProductDTO>()
+                .ForMember(des => des.ItemName, act => act.MapFrom(src => src.Name.StartsWith("A")?src.Name:src.OptionalName))
+                .ForMember(des => des.Quantity, act => act.Condition(src => (src.Quantity > 0)))
+                .ForMember(des => des.Amount, act => act.Condition(src => (src.Amount>100)));
+            });
+            var mapper = config.CreateMapper();
+            var productDTO = mapper.Map<ProductDTO>(product);
+            Console.WriteLine("Before mapping:");
+            Console.WriteLine($"ProductID: {product.ProductID}, Name: {product.Name}, OptionalName: {product.OptionalName}, Quantity: {product.Quantity}, Amount: {product.Amount}");
+            Console.WriteLine("After mapping:");
+            Console.WriteLine($"ProductID: {productDTO.ProductID}, ItemName: {productDTO.ItemName}, ItemQuantity: {productDTO.Quantity}, Amount: {productDTO.Amount}");
+            
+        }
+    }
+}
